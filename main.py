@@ -52,7 +52,7 @@ def echo(update: Update, context: CallbackContext) -> None:
         'ru'
     )
     update.message.reply_text(answer)
-    # logger.info(update.effective_user)
+    logger.info(f"effective_user: {update.effective_user}")
 
 
 def main() -> None:
