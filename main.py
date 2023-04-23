@@ -19,17 +19,16 @@ import logging
 from environs import Env
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from detect_intent import detect_intent_text
 
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
-
 logger = logging.getLogger(__name__)
 
 
-# Define a few command handlers. These usually take the two arguments update and
-# context.
+# Define a few command handlers. These usually take the two arguments update and context.
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
@@ -46,7 +45,14 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    update.message.reply_text(update.message.text)
+    answer = detect_intent_text(
+        'verbs-games-support2-vyfg',
+        update.effective_user.id,
+        update.message.text,
+        'ru'
+    )
+    update.message.reply_text(answer)
+    # logger.info(update.effective_user)
 
 
 def main() -> None:
