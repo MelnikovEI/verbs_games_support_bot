@@ -1,36 +1,24 @@
-"""
-import vk_api
-from environs import Env
-from vk_api.longpoll import VkLongPoll, VkEventType
-
-env = Env()
-env.read_env()
-vk_group_token = env('VK_GROUP_TOKEN')
-
-vk_session = vk_api.VkApi(token=vk_group_token)
-
-longpoll = VkLongPoll(vk_session)
-
-for event in longpoll.listen():
-    if event.type == VkEventType.MESSAGE_NEW:
-        print('Новое сообщение:')
-        if event.to_me:
-            print('Для меня от: ', event.user_id)
-        else:
-            print('От меня для: ', event.user_id)
-        print('Текст:', event.text)
-"""
-
+import logging
 import random
 import vk_api as vk
 from environs import Env
 from vk_api.longpoll import VkLongPoll, VkEventType
+from detect_intent import detect_intent_text
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def echo(event, vk_api):
+    answer = detect_intent_text(
+        'verbs-games-support2-vyfg',
+        event.user_id,
+        event.text,
+        'ru'
+    )
     vk_api.messages.send(
         user_id=event.user_id,
-        message=event.text,
+        message=answer,
         random_id=random.randint(1, 1000)
     )
 
