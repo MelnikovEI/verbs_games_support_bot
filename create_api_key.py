@@ -1,4 +1,3 @@
-
 from google.cloud import api_keys_v2
 from google.cloud.api_keys_v2 import Key
 
@@ -38,4 +37,5 @@ def create_api_key(project_id: str, suffix: str) -> Key:
     return response
 
 
-print(create_api_key('verbs-games-support2-vyfg', 'suffix'))
+def main() -> None:
+    print(create_api_key('verbs-games-support2-vyfg', 'suffix'))
