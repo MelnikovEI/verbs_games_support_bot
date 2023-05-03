@@ -48,12 +48,15 @@ TG_BOT_TOKEN=5969...:AAHo95396...qWokHo
 GOOGLE_APPLICATION_CREDENTIALS=C:\Users\...\AppData\Roaming\gcloud\application_default_credentials.json
 GOOGLE_CLOUD_PROJECT=verbs-games-support2-vyfg
 VK_GROUP_TOKEN=vk1.a.r...5dUHYg
+TG_ADMIN_BOT_TOKEN=613...yd5Q
+ADMIN_CHAT_ID=54...70
 ```
 Данные выше приведены для примера.
-`TG_BOT_TOKEN` замените на токен он чатбота в Telegram. Вот [туториал](https://spark.ru/startup/it-agenstvo-index/blog/47364/kak-poluchit-tokeni-dlya-sozdaniya-chat-bota-v-telegrame-vajbere-i-v-vkontakte), как это сделать.
-`GOOGLE_APPLICATION_CREDENTIALS` задаёт путь к файлу 
-`VK_GROUP_TOKEN` замените на токен от группы VK. Вот [туториал](https://spark.ru/startup/it-agenstvo-index/blog/47364/kak-poluchit-tokeni-dlya-sozdaniya-chat-bota-v-telegrame-vajbere-i-v-vkontakte), как это сделать.
-
+- `TG_BOT_TOKEN` замените на токен он чатбота в Telegram. Вот [туториал](https://spark.ru/startup/it-agenstvo-index/blog/47364/kak-poluchit-tokeni-dlya-sozdaniya-chat-bota-v-telegrame-vajbere-i-v-vkontakte), как это сделать.
+- `GOOGLE_APPLICATION_CREDENTIALS` задаёт путь к файлу с ключами от вашего Google-аккаунта
+- `VK_GROUP_TOKEN` замените на токен от группы VK. Вот [туториал](https://spark.ru/startup/it-agenstvo-index/blog/47364/kak-poluchit-tokeni-dlya-sozdaniya-chat-bota-v-telegrame-vajbere-i-v-vkontakte), как это сделать.
+- `TG_ADMIN_BOT_TOKEN` токен бота для администрирования проекта, пришлёт ошибку скрипта администратору
+- `ADMIN_CHAT_ID` id учетной записи администратора в телеграм можно узнать https://telegram.me/userinfobot
 ## Запуск
 Телеграм бот
 ```sh

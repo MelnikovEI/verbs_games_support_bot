@@ -1,9 +1,12 @@
 import logging
 import random
+import telegram
 import vk_api as vk
 from environs import Env
 from vk_api.longpoll import VkLongPoll, VkEventType
+
 from detect_intent import detect_intent_text
+from telegram_logs_handler import TelegramLogsHandler
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -39,4 +42,18 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    env = Env()
+    env.read_env()
+    tg_admin_bot_token = env('TG_ADMIN_BOT_TOKEN')
+    chat_id = env('ADMIN_CHAT_ID')
+    admin_bot = telegram.Bot(token=tg_admin_bot_token)
+
+    adm_logger = logging.getLogger(__file__)
+    adm_logger.setLevel(logging.WARNING)
+    adm_logger.addHandler(TelegramLogsHandler(admin_bot, chat_id))
+    adm_logger.info("Бот запущен")
+
+    try:
+        main()
+    except Exception as err:
+        adm_logger.error(err, exc_info=True)
