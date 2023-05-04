@@ -12,7 +12,3 @@ def detect_intent(project_id, session_id, text, language_code) -> DetectIntentRe
     query_input = dialogflow.QueryInput(text=text_input)
     response = session_client.detect_intent(request={"session": session, "query_input": query_input})
     return response
-
-
-if __name__ == '__main__':
-    print(detect_intent('verbs-games-support2-vyfg', 1, 'Хай', 'ru'))

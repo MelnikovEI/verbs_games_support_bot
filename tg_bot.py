@@ -38,23 +38,11 @@ def reply(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(dialogflow_response.query_result.fulfillment_text)
 
 
-def main() -> None:
-    tg_bot_token = env('TG_BOT_TOKEN')
-    updater = Updater(tg_bot_token)
-    dispatcher = updater.dispatcher
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply))
-    adm_logger.info("Бот запущен")
-    updater.start_polling()
-    updater.idle()
-
-
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
+
     env = Env()
     env.read_env()
-    google_cloud_project = env('GOOGLE_CLOUD_PROJECT')
 
     tg_admin_bot_token = env('TG_ADMIN_BOT_TOKEN')
     chat_id = env('ADMIN_CHAT_ID')
@@ -63,6 +51,15 @@ if __name__ == '__main__':
     adm_logger.addHandler(TelegramLogsHandler(admin_bot, chat_id))
 
     try:
-        main()
+        google_cloud_project = env('GOOGLE_CLOUD_PROJECT')
+        tg_bot_token = env('TG_BOT_TOKEN')
+        updater = Updater(tg_bot_token)
+        dispatcher = updater.dispatcher
+        dispatcher.add_handler(CommandHandler("start", start))
+        dispatcher.add_handler(CommandHandler("help", help_command))
+        dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply))
+        adm_logger.info("Бот запущен")
+        updater.start_polling()
+        updater.idle()
     except Exception as err:
         adm_logger.error(err, exc_info=True)
