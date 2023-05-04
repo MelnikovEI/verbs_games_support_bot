@@ -28,8 +28,6 @@ def reply(event, vk_api, google_cloud_project):
 
 
 def main() -> None:
-    env = Env()
-    env.read_env()
     vk_group_token = env('VK_GROUP_TOKEN')
     google_cloud_project = env('GOOGLE_CLOUD_PROJECT')
 
@@ -49,7 +47,6 @@ if __name__ == "__main__":
     tg_admin_bot_token = env('TG_ADMIN_BOT_TOKEN')
     chat_id = env('ADMIN_CHAT_ID')
     admin_bot = telegram.Bot(token=tg_admin_bot_token)
-
     adm_logger.setLevel(logging.WARNING)
     adm_logger.addHandler(TelegramLogsHandler(admin_bot, chat_id))
 

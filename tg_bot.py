@@ -10,10 +10,6 @@ from telegram_logs_handler import TelegramLogsHandler
 logger = logging.getLogger(__name__)
 adm_logger = logging.getLogger(__file__)
 
-env = Env()
-env.read_env()
-google_cloud_project = env('GOOGLE_CLOUD_PROJECT')
-
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
@@ -56,11 +52,13 @@ def main() -> None:
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
+    env = Env()
+    env.read_env()
+    google_cloud_project = env('GOOGLE_CLOUD_PROJECT')
 
     tg_admin_bot_token = env('TG_ADMIN_BOT_TOKEN')
     chat_id = env('ADMIN_CHAT_ID')
     admin_bot = telegram.Bot(token=tg_admin_bot_token)
-
     adm_logger.setLevel(logging.WARNING)
     adm_logger.addHandler(TelegramLogsHandler(admin_bot, chat_id))
 
