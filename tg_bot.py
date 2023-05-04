@@ -4,7 +4,7 @@ from environs import Env
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from detect_intent import detect_intent_text
+from detect_intent import detect_intent
 from telegram_logs_handler import TelegramLogsHandler
 
 logger = logging.getLogger(__name__)
@@ -27,15 +27,15 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def reply(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    answer = detect_intent_text(
+    dialogflow_response = detect_intent(
         google_cloud_project,
         update.effective_user.id,
         update.message.text,
-        'ru'
+        'ru',
     )
-    if answer:
-        update.message.reply_text(answer)
-    logger.info(f"effective_user: {update.effective_user}")
+    logger.info(f"effective_user: {update.effective_user}, text: {update.message.text}, "
+                f"answer: {dialogflow_response.query_result.fulfillment_text}")
+    update.message.reply_text(dialogflow_response.query_result.fulfillment_text)
 
 
 def main() -> None:

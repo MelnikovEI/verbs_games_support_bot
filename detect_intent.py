@@ -1,7 +1,8 @@
 from google.cloud import dialogflow
+from google.cloud.dialogflow_v2 import DetectIntentResponse
 
 
-def detect_intent_text(project_id, session_id, text, language_code):
+def detect_intent(project_id, session_id, text, language_code) -> DetectIntentResponse:
     """Returns the result of detect intent with texts as inputs.
     Using the same `session_id` between requests allows continuation of the conversation."""
     session_client = dialogflow.SessionsClient()
@@ -10,10 +11,8 @@ def detect_intent_text(project_id, session_id, text, language_code):
     text_input = dialogflow.TextInput(text=text, language_code=language_code)
     query_input = dialogflow.QueryInput(text=text_input)
     response = session_client.detect_intent(request={"session": session, "query_input": query_input})
-    if response.query_result.intent.is_fallback:
-        return
-    return response.query_result.fulfillment_text
+    return response
 
 
 if __name__ == '__main__':
-    print(detect_intent_text('verbs-games-support2-vyfg', 1, 'Хай', 'ru'))
+    print(detect_intent('verbs-games-support2-vyfg', 1, 'Хай', 'ru'))

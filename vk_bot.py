@@ -5,7 +5,7 @@ import vk_api as vk
 from environs import Env
 from vk_api.longpoll import VkLongPoll, VkEventType
 
-from detect_intent import detect_intent_text
+from detect_intent import detect_intent
 from telegram_logs_handler import TelegramLogsHandler
 
 logger = logging.getLogger(__name__)
@@ -13,16 +13,18 @@ adm_logger = logging.getLogger(__file__)
 
 
 def reply(event, vk_api, google_cloud_project):
-    answer = detect_intent_text(
+    dialogflow_response = detect_intent(
         google_cloud_project,
         event.user_id,
         event.text,
         'ru'
     )
-    if answer:
+    if dialogflow_response.query_result.intent.is_fallback:
+        return
+    else:
         vk_api.messages.send(
             user_id=event.user_id,
-            message=answer,
+            message=dialogflow_response.query_result.fulfillment_text,
             random_id=random.randint(1, 1000)
         )
 
