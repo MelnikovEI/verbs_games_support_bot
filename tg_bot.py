@@ -7,8 +7,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from detect_intent import detect_intent_text
 from telegram_logs_handler import TelegramLogsHandler
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
 logger = logging.getLogger(__name__)
+adm_logger = logging.getLogger(__file__)
 
 env = Env()
 env.read_env()
@@ -49,20 +49,21 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply))
+    adm_logger.info("Бот запущен")
     updater.start_polling()
     updater.idle()
 
 
 if __name__ == '__main__':
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
+
     tg_admin_bot_token = env('TG_ADMIN_BOT_TOKEN')
     chat_id = env('ADMIN_CHAT_ID')
     admin_bot = telegram.Bot(token=tg_admin_bot_token)
 
-    adm_logger = logging.getLogger(__file__)
     adm_logger.setLevel(logging.WARNING)
     adm_logger.addHandler(TelegramLogsHandler(admin_bot, chat_id))
-    adm_logger.info("Бот запущен")
-    
+
     try:
         main()
     except Exception as err:
