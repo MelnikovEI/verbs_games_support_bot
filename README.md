@@ -7,7 +7,7 @@
 - Удаление аккаунта
 - Устройство на работу
 
-Если интент не распознан, ответ не последует.
+//Для vk_bot: если intent не распознан, ответ не последует.
 
 ## Установка
 [Установите Python](https://www.python.org/), если этого ещё не сделали. Требуется Python 3.8 и старше. Код может запуститься на других версиях питона от 3.1 и старше, но на них не тестировался.
@@ -41,8 +41,15 @@ python -m venv venv
 ```sh
 pip install -r requirements.txt
 ```
+### Настройка вопросов/ответов
+[Создайте проект в DialogFlow](https://cloud.google.com/dialogflow/es/docs/quick/setup)
 
-Определите переменные окружения. Создайте файл `.env` в каталоге `verbs_games_support_bot/` и положите туда такой код:
+[Создайте агента](https://cloud.google.com/dialogflow/es/docs/quick/build-agent)
+
+На странице Intents Вашего проекта добавьте вопросы и ответы.
+
+### Определите переменные окружения.
+Создайте файл `.env` в каталоге `verbs_games_support_bot/` и положите туда такой код:
 ```sh
 TG_BOT_TOKEN=5969...:AAHo95396...qWokHo
 GOOGLE_APPLICATION_CREDENTIALS=C:\Users\...\AppData\Roaming\gcloud\application_default_credentials.json
@@ -54,6 +61,7 @@ ADMIN_CHAT_ID=54...70
 Данные выше приведены для примера.
 - `TG_BOT_TOKEN` замените на токен он чатбота в Telegram. Вот [туториал](https://spark.ru/startup/it-agenstvo-index/blog/47364/kak-poluchit-tokeni-dlya-sozdaniya-chat-bota-v-telegrame-vajbere-i-v-vkontakte), как это сделать.
 - `GOOGLE_APPLICATION_CREDENTIALS` задаёт путь к файлу с ключами от вашего Google-аккаунта
+- `GOOGLE_CLOUD_PROJECT` - Project ID [Вашего GOOGLE PROJECT](https://dialogflow.cloud.google.com/#/editAgent/verbs-games-support2-vyfg/) - пример 
 - `VK_GROUP_TOKEN` замените на токен от группы VK. Вот [туториал](https://spark.ru/startup/it-agenstvo-index/blog/47364/kak-poluchit-tokeni-dlya-sozdaniya-chat-bota-v-telegrame-vajbere-i-v-vkontakte), как это сделать.
 - `TG_ADMIN_BOT_TOKEN` токен бота для администрирования проекта, пришлёт ошибку скрипта администратору
 - `ADMIN_CHAT_ID` id учетной записи администратора в телеграм можно узнать https://telegram.me/userinfobot
@@ -73,4 +81,4 @@ python tg_bot.py
 ![demo.gif](demo.gif)
 
 ## Тренировка бота
-Если Вы хотите добавить/изменить вопросы/ответы, которые умеет распознавать бот, зайдите на страницу [Intents проекта dialogflow](https://dialogflow.cloud.google.com/#/agent/verbs-games-support2-vyfg/intents).
+Добавить/изменить вопросы/ответы, которые умеет распознавать бот: [Intents (пример) проекта dialogflow](https://dialogflow.cloud.google.com/#/agent/verbs-games-support2-vyfg/intents).
