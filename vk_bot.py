@@ -19,9 +19,7 @@ def reply(event, vk_api, google_cloud_project):
         event.text,
         'ru'
     )
-    if dialogflow_response.query_result.intent.is_fallback:
-        return
-    else:
+    if not dialogflow_response.query_result.intent.is_fallback:
         vk_api.messages.send(
             user_id=event.user_id,
             message=dialogflow_response.query_result.fulfillment_text,
