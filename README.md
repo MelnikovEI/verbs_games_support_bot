@@ -81,4 +81,8 @@ python tg_bot.py
 ![demo.gif](demo.gif)
 
 ## Тренировка бота
-Добавить/изменить вопросы/ответы, которые умеет распознавать бот: [Intents (пример) проекта dialogflow](https://dialogflow.cloud.google.com/#/agent/verbs-games-support2-vyfg/intents).
+1) Добавить/изменить вопросы/ответы, которые умеет распознавать бот: [Intents (пример) проекта dialogflow](https://dialogflow.cloud.google.com/#/agent/verbs-games-support2-vyfg/intents).
+2) Если вопросы и ответы имеются в виде json файла (пример "questions.json" в папке проекта), то можно воспользоваться скриптом:
+```
+py create_intents.py questions.json
+```
