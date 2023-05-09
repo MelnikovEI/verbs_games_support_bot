@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 adm_logger = logging.getLogger(__file__)
 
 
-def reply(event, vk_api, google_cloud_project):
+def reply(event, vk_api, project_id):
     dialogflow_response = detect_intent(
-        google_cloud_project,
+        project_id,
         event.user_id,
         event.text,
         'ru'
