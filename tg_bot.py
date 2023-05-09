@@ -25,10 +25,10 @@ def help_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Это помощник компании «Игра глаголов», спросите меня и я постараюсь помочь.')
 
 
-def reply(update: Update, context: CallbackContext) -> None:
+def reply(update: Update, context: CallbackContext, project_id) -> None:
     """Echo the user message."""
     dialogflow_response = detect_intent(
-        google_cloud_project,
+        project_id,
         update.effective_user.id,
         update.message.text,
         'ru',
@@ -57,7 +57,10 @@ if __name__ == '__main__':
         dispatcher = updater.dispatcher
         dispatcher.add_handler(CommandHandler("start", start))
         dispatcher.add_handler(CommandHandler("help", help_command))
-        dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, reply))
+        dispatcher.add_handler(MessageHandler(
+            Filters.text & ~Filters.command,
+            callback=lambda update, context: reply(update, context, google_cloud_project),
+        ))
         adm_logger.info("Бот запущен")
         updater.start_polling()
         updater.idle()
